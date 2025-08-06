@@ -1,5 +1,5 @@
 import app, { idToIndex } from "#app";
-import employees from "#db/employees";
+import employees, { getRandomEmployee } from "#db/employees";
 const PORT = 3000;
 
 app.get("/", (req, res) => {
@@ -11,13 +11,13 @@ app.get("/employees", (req, res) => {
 });
 
 app.get("/employees/random", (req, res) => {
-  res.status(200).send("TODO: RANDOM");
+  const employee = getRandomEmployee();
+  res.status(200).send(employee);
 });
 
 app.get("/employees/:id", (req, res, next) => {
   try {
     const parsedI = idToIndex(parseInt(req.params.id));
-    console.log("PARSED I", parsedI);
     if (isNaN(parsedI)) {
       const error = new Error(`${req.params.id} is not a number`);
       error.code = 404;
@@ -41,3 +41,5 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+export default app;

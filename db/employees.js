@@ -12,3 +12,8 @@ const employees = [
 ];
 
 export default employees;
+
+export function getRandomEmployee() {
+  const randomI = Math.floor(Math.random() * (employees.length + 1));
+  return employees[randomI];
+}
